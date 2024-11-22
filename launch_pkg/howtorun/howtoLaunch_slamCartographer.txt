@@ -1,0 +1,33 @@
+*** remote PC 
+1. Bring my robot to World
+roslaunch turtlebot3_bringup turtlebot3_robot.launch
+
+2. robot tf
+# roslaunch turtlebot3_bringup turtlebot3_remote.launch
+roslaunch launch_pkg robot_tfstatic.launch
+
+# ***Laucnh wheel odom 
+roslaunch wheel_odom wheel_odom.launch
+
+# ***Launch imu data 
+roslaunch ros_imu_bno055 view_imu.launch
+
+Transfrom Odom to Base_footprint >> Cartographer sẽ publish ra luôn
+roslaunch launch_pkg robotpose_ekf.launch
+
+3. Run board
+roslaunch turtlebot3_bringup turtlebot3_core.launch
+
+4. Run cartographer slam
+roslaunch launch_pkg my_robot_cartographer.launch
+
+*** robot
+5. Run rviz slam 
+roslaunch launch_pkg rvizslam.launch
+>> Setup argument là cartographer
+
+*** remote PC 
+6. Navigate robot use keyboard ( if run move_base, lets pass)
+roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch
+or 
+rosrun teleop_keyboard teleop_twist_keyboard

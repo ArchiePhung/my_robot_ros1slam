@@ -1,0 +1,9 @@
+uint8 main_value_writeCan
+bool main_charge 
+bool main_emc_write
+bool main_emc_reset
+bool main_sound1
+bool main_sound2
+bool main_sound3
+bool main_sound4
+bool main_off_power

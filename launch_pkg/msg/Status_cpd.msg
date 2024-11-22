@@ -1,0 +1,14 @@
+uint8 cpd_upload_status
+uint8 cpd_value_canRead
+uint8 cpd_input1
+uint8 cpd_input2
+uint8 cpd_input3
+uint8 cpd_input4
+uint8 cpd_input5
+uint8 cpd_input6
+uint8 cpd_input7
+uint8 cpd_input8
+uint8 cpd_input9
+uint8 cpd_input10
+uint8 cpd_input11
+uint8 cpd_input12

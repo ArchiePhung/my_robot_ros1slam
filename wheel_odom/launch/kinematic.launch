@@ -1,0 +1,6 @@
+<launch>
+ 
+  <node pkg="wheel_odom" type="kinematic.py" name="wheel_odom_node" output="screen">
+  </node> 
+     
+</launch>

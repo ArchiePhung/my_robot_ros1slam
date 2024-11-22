@@ -1,0 +1,41 @@
+<launch>
+    <!-- <rosparam command="load"  file="$(find launch_pkg)/config/param_all.yaml" /> -->
+
+    <!-- Điều khiển robot chạy từ bản phím  -->
+    <!--<node pkg="teleop_keyboard" type="teleop_twist_keyboard" name="teleop_twist_keyboard" output="screen"  />  -->
+    
+    <!-- <node pkg="rqt_robot_steering" type="rqt_robot_steering" name="rqt_robot_steering">
+    </node> -->
+
+      <!-- Transformation Configuration ... Setting Up the Relationships Between Coordinate Frames --> 
+
+    <node pkg="rosserial_python" name="BOARD_node" type="serial_node.py" >
+        <param name="port" value="/dev/stibase_motor"/>
+        <param name="baud" value="57600"/>
+    </node>
+
+    <!-- Lidar Data Publisher Using RPLIDAR from Slamtec -->
+    <!-- Used for obstacle avoidance and can be used for mapping --> 
+    <!-- Publish: /scan -->
+    <node name="rplidarNode"          pkg="rplidar_ros"  type="rplidarNode" output="screen">
+        <param name="serial_port"         type="string" value="/dev/stibase_lidar"/>
+        <param name="serial_baudrate"     type="int"    value="115200"/>
+        <param name="frame_id"            type="string" value="laser"/>
+        <param name="inverted"            type="bool"   value="false"/>
+        <param name="angle_compensate"    type="bool"   value="true"/>
+    </node>
+
+    <!-- for creating map  -->
+    <arg name="geotiff_map_file_path" default="$(find hector_geotiff)/maps"/>
+    <!-- <param name="/use_sim_time" value="true"/> -->
+    <param name="/use_sim_time" value="false"/>
+    <node pkg="rviz" type="rviz" name="rviz" args="-d $(find hector_slam_launch)/rviz_cfg/mapping_demo.rviz"/>
+
+    <include file="$(find hector_mapping)/launch/mapping_default.launch"/>
+    
+    <include file="$(find hector_geotiff_launch)/launch/geotiff_mapper.launch">
+        <arg name="trajectory_source_frame_name" value="scanmatcher_frame"/>
+        <arg name="map_file_path" value="$(arg geotiff_map_file_path)"/>
+    </include>
+
+</launch>

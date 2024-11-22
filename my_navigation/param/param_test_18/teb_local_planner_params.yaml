@@ -1,0 +1,46 @@
+TEBLocalPlannerROS:
+
+  # Tốc độ tối đa và tối thiểu
+  max_vel_x: 0.6             # Tốc độ tiến tối đa (m/s)
+  max_vel_y: 0.0             # Robot không hỗ trợ di chuyển ngang
+  min_vel_x: 0.08            # Tốc độ tiến tối thiểu (m/s)
+  max_vel_theta: 1.0         # Tốc độ quay tối đa (rad/s)
+  min_vel_theta: -1.0        # Tốc độ quay tối thiểu (rad/s)
+  min_in_place_vel_theta: 0.4 # Tốc độ quay tại chỗ tối thiểu (rad/s)
+  acc_lim_x: 1.0             # Gia tốc tối đa theo trục x (m/s²)
+  acc_lim_theta: 0.6         # Gia tốc quay tối đa (rad/s²)
+
+  # Tối ưu hóa
+  dt_ref: 0.2                # Chu kỳ thời gian tham chiếu (s)
+  dt_horizon: 1.5            # Khoảng thời gian dự đoán (s)
+  max_samples: 500           # Giới hạn số mẫu để giảm tải tính toán
+
+  # Cấu hình mẫu vận tốc
+  vx_samples: 12             # Số mẫu tốc độ tuyến tính
+  vtheta_samples: 15         # Số mẫu tốc độ góc
+
+  # Tương thích robot hình chữ nhật
+  footprint_model: 
+    type: "polygon"          # Dùng footprint hình đa giác
+    vertices: [[0.325, 0.225], [0.325, -0.225], [-0.325, -0.225], [-0.325, 0.225]]
+
+  # Tolerance (Ngưỡng dung sai)
+  xy_goal_tolerance: 0.10    # Ngưỡng khoảng cách đạt mục tiêu (m)
+  yaw_goal_tolerance: 0.05   # Ngưỡng góc đạt mục tiêu (rad)
+  free_goal_vel: false       # Robot sẽ dừng lại khi đạt mục tiêu
+
+  # Tránh chướng ngại vật
+  min_obstacle_dist: 0.3     # Khoảng cách tối thiểu với vật cản (m)
+  inflation_dist: 0.5        # Bán kính vùng tránh vật cản (m)
+  obstacle_poses_affected: 10 # Số lượng điểm ảnh hưởng bởi vật cản
+  include_costmap_obstacles: true
+  costmap_obstacles_behind_robot_dist: 0.2
+
+  # Các tham số bổ sung
+  feasibility_check_no_poses: 5 # Kiểm tra tính khả thi của đường đi
+  publish_feedback: true        # Xuất thông tin chi tiết để debug
+  weight_kinematics_nh: 1.0
+  weight_kinematics_forward_drive: 1.0
+  weight_optimaltime: 2.0
+  weight_obstacle: 50.0
+  weight_viapoint: 1.0

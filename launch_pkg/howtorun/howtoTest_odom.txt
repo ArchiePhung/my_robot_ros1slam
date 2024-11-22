@@ -1,0 +1,53 @@
+1. Commumication with Board
+roslaunch turtlebot3_bringup turtlebot3_core.launch
+
+1.5 Communication with Rviz 
+roslaunch wheel_odom convert_rviz2d.launch
+
+2. Run teleop keyboard
+rosrun teleop_keyboard teleop_twist_keyboard
+
+*********     Case 1: Use odom from encoder     **********
+3. Get odom from encoder data
+roslaunch wheel_odom kinematic_withtf.launch ( if encoder data as velocity rpm type)
+or
+roslaunch wheel_odom wheel_odom_withtf.launch ( if encoder data as ticks type) => reset if nhac robot
+
+==> Test it on rviz
+
+**********    Case 2: Use odom from encoder and imu     ************
+3. Get odom from encoder data
+roslaunch wheel_odom kinematic.launch ( if encoder data as velocity rpm type)
+or
+roslaunch wheel_odom wheel_odom.launch ( if encoder data as ticks type)
+
+==> Test it on rviz
+
+4. Get odom from imu
+roslaunch imu_odom imu_odom.launch
+or 
+roslaunch ros_imu_bno055 imu.launch
+
+==> Test it on rviz
+
+5. Combined 2 odom above
+
+roslaunch launch_pkg robot_tfstatic.launch
+roslaunch launch_pkg robotpose_ekf.launch
+
+==> Test it on rviz
+
+******************** Case Study ******************************
+6. kill /teleop keyboard
+
+7. run keyboard command node
+roslaunch launch_pkg keyboard_cmd.launch
+
+8. Test robot spin to target angle
+rosrun pose_publisher get_TFcoef.py
+
+9. Test robot translation to target distance
+rosrun pose_publisher move_to_point.py
+
+==> Test it on rviz
+rosrun rviz rviz -d /home/archie/robot_ws/tfrviz.rviz

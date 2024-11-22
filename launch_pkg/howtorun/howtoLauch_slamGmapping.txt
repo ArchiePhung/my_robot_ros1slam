@@ -1,0 +1,37 @@
+*** remote PC 
+1. Bring my robot to World
+roslaunch turtlebot3_bringup turtlebot3_robot.launch
+roslaunch turtlebot3_bringup turtlebot3_core.launch
+
+2. robot tf
+# roslaunch turtlebot3_bringup turtlebot3_remote.launch
+roslaunch launch_pkg robot_tfstatic.launch
+
+# 2. Laucnh wheel odom 
+roslaunch wheel_odom wheel_odom.launch
+
+# 3. Launch imu data 
+roslaunch ros_imu_bno055 imu.launch
+
+4. Transfrom Odom to Base_footprint
+roslaunch launch_pkg robotpose_ekf.launch
+
+4.5 Transform odom to base_footprint(rf20)
+roslaunch rf2o_laser_odometry rf2o_laser_odometry.launch
+
+5. slam gmamping
+roslaunch turtlebot3_slam turtlebot3_slam.launch slam_methods:=gmapping
+
+*** robot
+7. Run rviz slam 
+roslaunch launch_pkg rviz_navigation.launch
+>> Set 2d Pose for robot use rviz
+
+*** remote PC 
+8. Navigate robot use keyboard ( if run move_base, lets pass)
+roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch
+or 
+rosrun teleop_keyboard teleop_twist_keyboard
+
+6. Save map
+rosrun map_server map_saver -f /home/archie/robot_ws/maps_gmapping1

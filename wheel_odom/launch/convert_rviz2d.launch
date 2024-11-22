@@ -1,0 +1,7 @@
+<launch>
+ 
+  <!-- Rviz clicked 2d -->
+  <node pkg="wheel_odom" type="rviz_click_2d" name="rviz_click_2d" output="screen">
+  </node> 
+  
+</launch>

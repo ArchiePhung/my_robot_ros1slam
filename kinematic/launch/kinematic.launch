@@ -1,0 +1,3 @@
+<launch>
+	<node pkg="kinematic" type="kinematic.py" name="kinematic_node" output="screen"> </node>
+</launch>

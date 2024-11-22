@@ -1,0 +1,29 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "${default}",
+        "limitSymbolsToIncludedHeaders": false
+      },
+      "includePath": [
+        "/home/archiep/catkin_ws/devel/include/**",
+        "/opt/ros/noetic/include/**",
+        "/home/archiep/catkin_ws/src/agvconveyor_pkg/include/**",
+        "/home/archiep/catkin_ws/src/arduino_pkg1/include/**",
+        "/home/archiep/catkin_ws/src/bt1/include/**",
+        "/home/archiep/catkin_ws/src/interactive_markers_tutorial/include/**",
+        "/home/archiep/catkin_ws/src/learnin_tf/include/**",
+        "/home/archiep/catkin_ws/src/r2d2/include/**",
+        "/home/archiep/catkin_ws/src/robot_setup_tf/include/**",
+        "/home/archiep/catkin_ws/src/using_markers/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS",
+      "intelliSenseMode": "gcc-x64",
+      "compilerPath": "/usr/bin/gcc",
+      "cStandard": "gnu11",
+      "cppStandard": "c++14"
+    }
+  ],
+  "version": 4
+}

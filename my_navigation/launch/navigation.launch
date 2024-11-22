@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="map_file" default="$(find mapping)/map/map.yaml"/>
+  <!-- Map server -->
+  <node pkg="map_server" name="map_server" type="map_server" args="$(arg map_file)"/>
+  <!-- AMCL -->
+  <include file="$(find my_navigation)/launch/amcl.launch"/>
+  <!-- Odom -->
+  <include file="$(find rf2o_laser_odometry)/launch/rf2o_laser_odometry.launch"/>
+  <!-- move_base -->
+  <include file="$(find my_navigation)/launch/move_base.launch"/>
+</launch>
+
+
+
+
+
+
+
+
+  

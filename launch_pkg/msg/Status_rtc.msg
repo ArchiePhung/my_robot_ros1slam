@@ -1,0 +1,2 @@
+uint8 rtc_upload_status
+uint8 rtc_value_canRead

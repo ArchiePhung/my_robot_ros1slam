@@ -1,0 +1,2 @@
+bool rtcPort_status
+bool boardPort_status

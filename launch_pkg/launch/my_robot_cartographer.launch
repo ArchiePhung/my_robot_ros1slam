@@ -1,0 +1,42 @@
+<launch>
+  <!-- Use this launch file to start Cartographer -->
+  <arg name="use_sim_time" default="false"/>
+  <arg name="configuration_directory" default="$(find launch_pkg)/config/"/>
+  <arg name="configuration_basename" default="my_robot.lua"/>
+
+  <param name="use_sim_time" value="$(arg use_sim_time)"/>
+
+  <!-- <node name="cartographer_node" pkg="cartographer_ros" type="cartographer_node" output="screen">
+    <param name="configuration_directory" value="$(arg configuration_directory)"/>
+    <param name="configuration_basename" value="$(arg configuration_basename)"/>
+    <param name="use_sim_time" value="$(arg use_sim_time)"/>
+    <remap from="scan" to="/scan"/>
+  </node> -->
+
+  <node name="cartographer_node" pkg="cartographer_ros"
+      type="cartographer_node" args="
+          -configuration_directory
+              $(find launch_pkg)/config
+          -configuration_basename my_robot.lua"
+      output="screen">
+    <remap from="scan" to="/scan" />
+    <remap from="imu" to="/imu/data" />
+  </node>
+  
+  <node name="cartographer_occupancy_grid_node" pkg="cartographer_ros" type="cartographer_occupancy_grid_node" output="screen">
+    <param name="resolution" value="0.05"/>
+    <param name="publish_period_sec" value="1.0"/>
+  </node>
+
+  <!-- <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher">
+    <param name="use_sim_time" value="$(arg.use_sim_time)"/>
+    <param name="robot_description" command="$(find xacro)/xacro $(find your_package_name)/urdf/your_robot.urdf.xacro"/>
+  </node> -->
+
+  <!-- <node name="rviz" pkg="rviz" type="rviz" args="-d $(find your_package_name)/rviz/my_robot.rviz"/> -->
+
+  <!-- Static transform from base_link to laser -->
+  <!-- <node pkg="tf2_ros" type="static_transform_publisher" name="base_to_laser_broadcaster" args="0 0 0 0 0 0 base_link laser" /> -->
+  
+</launch>
+

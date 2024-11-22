@@ -1,0 +1,5 @@
+<launch>
+    <node pkg="pose_publisher" name="robot_pose" type="robot_pose_publisher" output="screen">
+        <param name="publish_frequency" value="20"/>
+    </node>
+</launch>

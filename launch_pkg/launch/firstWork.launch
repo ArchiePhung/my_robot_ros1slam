@@ -1,0 +1,4 @@
+<launch>
+	<node pkg="launch_pkg" name="firstWork" type="firstWork.py" />
+	<!-- output="screen" -->
+</launch>

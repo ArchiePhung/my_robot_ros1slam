@@ -1,0 +1,146 @@
+/*
+ * Author: Automatic Addison
+ * Website: https://automaticaddison.com
+ * Description: Count the number of encoder pulses per revolution.  
+ */
+ 
+#include <Arduino.h>
+#include "param_config.h"
+#include "pin_config.h"
+
+// Encoder output to Arduino Interrupt pin. Tracks the pulse count.
+#define ENC_IN_RIGHT_A 2     // 3: left, 2: right
+
+ 
+// Keep track of the number of right wheel pulses
+volatile long right_wheel_pulse_count = 0;
+// globals
+long prevT = 0;
+float eintegral_r = 0;
+float eintegral_l = 0;
+
+// Increment the number of pulses by 1
+void right_wheel_pulse() {
+  right_wheel_pulse_count++;
+}
+
+void stop(){
+   digitalWrite(LEFT_MOTOR_PIN_H, 0);
+   digitalWrite(LEFT_MOTOR_PIN_L, 0);
+   analogWrite(LEFT_ENABLE_MOTOR, 0);
+   digitalWrite(RIGHT_MOTOR_PIN_H, 0);
+   digitalWrite(RIGHT_MOTOR_PIN_L, 0);
+   analogWrite(RIGHT_ENABLE_MOTOR, 0);
+}
+
+void run_forward(){
+   digitalWrite(LEFT_MOTOR_PIN_H, 1);
+   digitalWrite(LEFT_MOTOR_PIN_L, 0);
+   digitalWrite(RIGHT_MOTOR_PIN_H, 1);
+   digitalWrite(RIGHT_MOTOR_PIN_L, 0);
+}
+
+void run_backward(){
+   digitalWrite(LEFT_MOTOR_PIN_H, 0);
+   digitalWrite(LEFT_MOTOR_PIN_L, 1);
+   digitalWrite(RIGHT_MOTOR_PIN_H, 0);
+   digitalWrite(RIGHT_MOTOR_PIN_L, 1);
+}
+
+void turn_right(){
+   digitalWrite(LEFT_MOTOR_PIN_H, 0);
+   digitalWrite(LEFT_MOTOR_PIN_L, 1);
+   digitalWrite(RIGHT_MOTOR_PIN_H, 1);
+   digitalWrite(RIGHT_MOTOR_PIN_L, 0);
+}
+
+void turn_left(){
+   digitalWrite(LEFT_MOTOR_PIN_H, 1);
+   digitalWrite(LEFT_MOTOR_PIN_L, 0);
+   digitalWrite(RIGHT_MOTOR_PIN_H, 0);
+   digitalWrite(RIGHT_MOTOR_PIN_L, 1);
+}
+
+void run(int dir_, int Motor_speeda, int Motor_speedb)
+{
+   if( dir_ == 1){
+      run_forward();
+      analogWrite(LEFT_ENABLE_MOTOR, abs(Motor_speeda));
+      analogWrite(RIGHT_ENABLE_MOTOR, abs(Motor_speedb));
+   }
+
+   else if( dir_ == 2){
+      turn_left();
+      analogWrite(LEFT_ENABLE_MOTOR, abs(int(0.6*Motor_speeda)));
+      analogWrite(RIGHT_ENABLE_MOTOR, abs(int(0.6*Motor_speedb)));      
+   }
+
+   else if( dir_ == 3){
+      turn_right();
+      analogWrite(LEFT_ENABLE_MOTOR, abs(int(0.6*Motor_speeda)));
+      analogWrite(RIGHT_ENABLE_MOTOR, abs(int(0.6*Motor_speedb)));           
+   }
+
+   else if( dir_ == 4){
+      run_backward();
+      analogWrite(LEFT_ENABLE_MOTOR, abs(Motor_speeda));
+      analogWrite(RIGHT_ENABLE_MOTOR, abs(Motor_speedb));      
+   }
+   else{
+      stop();
+      analogWrite(LEFT_ENABLE_MOTOR, 0);
+      analogWrite(RIGHT_ENABLE_MOTOR, 0);
+   }
+}
+
+void setup() {
+ 
+  // Open the serial port at 9600 bps
+  Serial.begin(57600); 
+ 
+  // Set pin states of the encoder
+  pinMode(ENC_IN_RIGHT_A , INPUT_PULLUP);
+
+  pinMode(LEFT_MOTOR_PIN_H, OUTPUT);
+  pinMode(LEFT_MOTOR_PIN_L, OUTPUT);
+  pinMode(LEFT_ENABLE_MOTOR, OUTPUT);
+  pinMode(RIGHT_MOTOR_PIN_H, OUTPUT);
+  pinMode(RIGHT_MOTOR_PIN_L, OUTPUT);
+  pinMode(RIGHT_ENABLE_MOTOR, OUTPUT);
+
+  // Every time the pin goes high, this is a pulse
+  attachInterrupt(digitalPinToInterrupt(ENC_IN_RIGHT_A), right_wheel_pulse, RISING);
+   
+}
+ 
+void loop() {
+  // Compute velocity with method 1
+  long currT = micros();
+  float deltaT = ((float) (currT-prevT))/1.0e6;
+
+  float vtl = 800;
+  float kpl = 50;
+  float kil = 0;
+  float el = vtl - right_wheel_pulse_count;
+  eintegral_l = eintegral_l + el*deltaT;
+  
+  float ul = kpl*el + kil*eintegral_l;
+
+  // u = constrain(u, PWM_MIN_RIGHT_MOTOR, PWM_MAX_RIGHT_MOTOR);
+  Serial.print(" Remain Pulses: ");
+  Serial.println(el);
+
+  int pwr_left = (int) fabs(ul);
+  if(pwr_left > PWM_MAX_LEFT_MOTOR){
+    pwr_left = PWM_MAX_LEFT_MOTOR;
+  }
+
+  Serial.print(" Remain Pulses: ");
+  Serial.println(pwr_left);
+
+  if (el > 0) run(4, 0, 100);
+  else{
+    stop();
+  }
+  prevT = currT;
+}

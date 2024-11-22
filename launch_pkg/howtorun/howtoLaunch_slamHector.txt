@@ -1,0 +1,39 @@
+1. Bring my robot to World
+roslaunch turtlebot3_bringup turtlebot3_robot.launch
+
+2. Transfrom Odom to Base_footprint
+roslaunch launch_pkg robotpose_ekf.launch
+
+3. Run rviz slam 
+roslaunch launch_pkg rvizslam.launch
+>> Set 2d Pose for robot use rviz
+
+4. Run hector slam 
+roslaunch turtlebot3_slam turtlebot3_slam.launch
+
+7. Run rviz slam 
+roslaunch launch_pkg rviz_navigation.launch
+>> Set 2d Pose for robot use rviz
+
+5. Navigate robot use keyboard
+roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch
+>> remember move robot so slow
+
+6. Save map
+rosrun map_server map_saver -f /home/archie/robot_ws/maps
+
+or 
+
+USE THIS >>>>>
+1. Step 1
+roslaunch launch_pkg get_map.launch
+
+>> run node board independently
+roslaunch turtlebot3_bringup turtlebot3_core.launch
+
+2. Navigate robot use keyboard
+roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch
+>> remember move robot so slow
+
+3. Save map
+rosrun map_server map_saver -f /home/archie/robot_ws/maps/my_map

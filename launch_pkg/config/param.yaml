@@ -1,0 +1,55 @@
+#------ PORT PHYSICAL ------#
+scanmap: 0
+disable_oc: 1
+#------ PORT PHYSICAL ------#
+port_core   : stibase_motor
+port_lidar  : stibase_lidar
+port_imu    : stibase_imu
+port_driverAll  : stibase_motor
+port_loadcell : stibase_loadcell
+port_rtc    : stibase_rtc
+
+#------ NEW PORT ------#
+port_Lidar_1  : 192.168.100.2
+port_Lidar_2  : 0
+name_card     : wlo2
+name_eth      : eno1
+SSID_wifi          : STI_VietNam_No8
+PASS_wifi          : 66668888
+ip_address    : 192.168.1.103
+rviz: 1
+#------ File launch Path ------#
+path_firstWork  : /home/archie/robot_ws/src/launch_pkg/launch/firstWork.launch # clean log
+# -
+path_core       : /home/archie/robot_ws/src/turtlebot3/turtlebot3_bringup/launch/turtlebot3_core.launch
+# -
+path_lidar     : /home/archie/robot_ws/src/rplidar_ros/launch/rplidar.launch
+# --
+path_navigation : /home/archie/robot_ws/src/my_navigation/launch/navigation.launch
+# -- 
+path_kinematic  : /home/archie/robot_ws/src/kinematic/launch/kinematic.launch
+# -- 
+path_pure : /home/archie/robot_ws/src/my_navigation/launch/pure.launch
+# -- 
+# -- 
+path_rviz : /home/archie/robot_ws/src/launch_pkg/launch/rviz_navigation.launch
+# path_robotPoseNav : /home/stivietnam/catkin_ws/src/sicknav350/launch/robotPoseNav.launch
+# # -- 
+# path_ekf        : /home/stivietnam/catkin_ws/src/launch_pkg/launch/ekf/ekf.launch
+# #--
+# path_safetyNav350: /home/stivietnam/catkin_ws/src/safety_zone/launch/safety_zone.launch
+# #--
+# path_client       : /home/stivietnam/catkin_ws/src/sti_control/launch/stiClient.launch
+# path_control      : /home/stivietnam/catkin_ws/src/sti_control/launch/stiControl.launch
+
+# #-- 
+# path_goalControl:    /home/stivietnam/catkin_ws/src/sti_module/launch/goalControl.launch
+# path_parkingControl: /home/stivietnam/catkin_ws/src/sti_module/launch/parkingControl.launch
+# # --
+# path_dataApp      : /home/stivietnam/catkin_ws/src/app_ros/launch/app_ros.launch # data_synthesis.launch
+# # --
+# path_posePublisher: /home/stivietnam/catkin_ws/src/pose_publisher/launch/robot_pose.launch
+# # --
+# path_convertCAN   : /home/stivietnam/catkin_ws/src/ros_canBus/launch/convertCAN_ROS.launch
+# # --
+# path_ps3          : /home/stivietnam/catkin_ws/src/ps3joy/launch/controlPS3.launch  

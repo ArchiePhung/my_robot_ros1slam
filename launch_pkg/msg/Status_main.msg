@@ -1,0 +1,7 @@
+float32 voltages_analog
+float32 charge_analog
+uint8 stsButton_reset
+uint8 stsButton_power
+uint8 EMC_status
+uint8 main_value_canRead
+uint8 main_upload_status

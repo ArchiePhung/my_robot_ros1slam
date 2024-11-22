@@ -1,0 +1,13 @@
+<launch>
+      <!-- Transformation Configuration ... Setting Up the Relationships Between Coordinate Frames --> 
+    <node pkg="tf" type="static_transform_publisher" name="base_link_to_laser" args="0.1 0 0.155 0 0 0 base_link laser 30" />
+    <!-- odom to base_footprint transform will be provided by the robot_pose_ekf node -->
+    <!-- map to odom will be provided by the AMCL -->
+    <!-- <node pkg="tf" type="static_transform_publisher" name="basefootprint_to_baselink" args="0 0 0.0325 0 0 0 base_footprint base_link 30" /> -->
+    <!-- <node pkg="tf" type="static_transform_publisher" name="baselink_to_imu" args="-0.08 0.08 0.05 -1.5708 0 0 base_link imu 30" /> -->
+    <node pkg="tf" type="static_transform_publisher" name="base_link_to_imu" args="0.1 0 -0.0125 0 0 0 base_link imu 30" />
+
+    <!-- <node pkg="tf2_ros" type="static_transform_publisher" name="basefootprint_to_baselink" args="0 0 0.1 0 0 0 base_footprint base_link" />
+    <node pkg="tf2_ros" type="static_transform_publisher" name="baselink_to_imu" args="-0.08 0.08 0.05 -1.5708 0 0 base_link imu_link" /> -->
+
+</launch>
